@@ -1,4 +1,4 @@
-﻿@model FinalProject_v1.Models.Accounts
+﻿@model FinalProjec_v1.Models.lead
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Accounts</h4>
+    <h4>lead</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,16 +23,22 @@
             @Html.DisplayFor(model => model.lName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.role)
+            @Html.DisplayNameFor(model => model.email)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.role)
+            @Html.DisplayFor(model => model.email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.password)
+            @Html.DisplayNameFor(model => model.phone)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.password)
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.owner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.owner)
         </dd>
     </dl>
 </div>

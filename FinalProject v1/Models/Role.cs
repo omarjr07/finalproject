@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject_v1.Models
 {
-    public class Roles
+    public class Role
     {
     public int ID { get; set; }
     public bool administrator { get; set; }
     public bool user { get; set; }
     }
 
-    public class RolesDBContext : DbContext
-    {
-        public DbSet<Roles> Roles { get; set; }
-    }
 }

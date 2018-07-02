@@ -14,8 +14,10 @@ namespace FinalProject_v1.Models
         {
         }
 
-        public DbSet<FinalProject_v1.Models.Accounts> Accounts { get; set; }
+        public DbSet<FinalProject_v1.Models.Account> Account { get; set; }
 
-        public DbSet<FinalProjec_v1.Models.Leads> Leads { get; set; }
+        public DbSet<FinalProjec_v1.Models.lead> lead { get; set; }
+
+        public DbSet<FinalProject_v1.Models.Role> roles { get; set; }
     }
 }

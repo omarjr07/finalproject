@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FinalProjec_v1.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject_v1.Models
 {
-    public class Accounts
+    public class Account
     {
         public int ID { get; set; }
         public string fName { get; set; }
@@ -15,8 +16,4 @@ namespace FinalProject_v1.Models
         public string password { get; set; }
     }
 
-    public class AccountsDBContext : DbContext
-    {
-        public DbSet<Accounts> Accounts { get; set; }
-    }
 }

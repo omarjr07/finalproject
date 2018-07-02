@@ -10,22 +10,22 @@ using FinalProject_v1.Models;
 
 namespace FinalProject_v1.Controllers
 {
-    public class LeadsController : Controller
+    public class LeadController : Controller
     {
         private readonly FinalProject_v1Context _context;
 
-        public LeadsController(FinalProject_v1Context context)
+        public LeadController(FinalProject_v1Context context)
         {
             _context = context;
         }
 
-        // GET: Leads
+        // GET: lead
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Leads.ToListAsync());
+            return View(await _context.lead.ToListAsync());
         }
 
-        // GET: Leads/Details/5
+        // GET: lead/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FinalProject_v1.Controllers
                 return NotFound();
             }
 
-            var leads = await _context.Leads
+            var lead = await _context.lead
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (leads == null)
+            if (lead == null)
             {
                 return NotFound();
             }
 
-            return View(leads);
+            return View(lead);
         }
 
-        // GET: Leads/Create
+        // GET: lead/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Leads/Create
+        // POST: lead/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,fName,lName,email,phone,owner")] Leads leads)
+        public async Task<IActionResult> Create([Bind("ID,fName,lName,email,phone,owner")] lead lead)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(leads);
+                _context.Add(lead);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(leads);
+            return View(lead);
         }
 
-        // GET: Leads/Edit/5
+        // GET: lead/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FinalProject_v1.Controllers
                 return NotFound();
             }
 
-            var leads = await _context.Leads.SingleOrDefaultAsync(m => m.ID == id);
-            if (leads == null)
+            var lead = await _context.lead.SingleOrDefaultAsync(m => m.ID == id);
+            if (lead == null)
             {
                 return NotFound();
             }
-            return View(leads);
+            return View(lead);
         }
 
-        // POST: Leads/Edit/5
+        // POST: lead/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,email,phone,owner")] Leads leads)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,email,phone,owner")] lead lead)
         {
-            if (id != leads.ID)
+            if (id != lead.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FinalProject_v1.Controllers
             {
                 try
                 {
-                    _context.Update(leads);
+                    _context.Update(lead);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LeadsExists(leads.ID))
+                    if (!leadExists(lead.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FinalProject_v1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(leads);
+            return View(lead);
         }
 
-        // GET: Leads/Delete/5
+        // GET: lead/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FinalProject_v1.Controllers
                 return NotFound();
             }
 
-            var leads = await _context.Leads
+            var lead = await _context.lead
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (leads == null)
+            if (lead == null)
             {
                 return NotFound();
             }
 
-            return View(leads);
+            return View(lead);
         }
 
-        // POST: Leads/Delete/5
+        // POST: lead/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var leads = await _context.Leads.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Leads.Remove(leads);
+            var lead = await _context.lead.SingleOrDefaultAsync(m => m.ID == id);
+            _context.lead.Remove(lead);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LeadsExists(int id)
+        private bool leadExists(int id)
         {
-            return _context.Leads.Any(e => e.ID == id);
+            return _context.lead.Any(e => e.ID == id);
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinalProjec_v1.Models
 {
-    public class Leads
+    public class lead
     {
         public int ID { get; set; }
         public string fName { get; set; }
@@ -16,8 +16,4 @@ namespace FinalProjec_v1.Models
         public string owner { get; set; }
     }
 
-    public class LeadsDBContext : DbContext
-    {
-        public DbSet<Leads> Leads { get; set; }
-    }
 }

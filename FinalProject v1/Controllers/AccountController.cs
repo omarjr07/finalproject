@@ -9,22 +9,22 @@ using FinalProject_v1.Models;
 
 namespace FinalProject_v1.Controllers
 {
-    public class AccountsController : Controller
+    public class AccountController : Controller
     {
         private readonly FinalProject_v1Context _context;
 
-        public AccountsController(FinalProject_v1Context context)
+        public AccountController(FinalProject_v1Context context)
         {
             _context = context;
         }
 
-        // GET: Accounts
+        // GET: Account
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Accounts.ToListAsync());
+            return View(await _context.Account.ToListAsync());
         }
 
-        // GET: Accounts/Details/5
+        // GET: Account/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace FinalProject_v1.Controllers
                 return NotFound();
             }
 
-            var accounts = await _context.Accounts
+            var account = await _context.Account
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (accounts == null)
+            if (account == null)
             {
                 return NotFound();
             }
 
-            return View(accounts);
+            return View(account);
         }
 
-        // GET: Accounts/Create
+        // GET: Account/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Accounts/Create
+        // POST: Account/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,fName,lName,role,password")] Accounts accounts)
+        public async Task<IActionResult> Create([Bind("ID,fName,lName,role,password")] Account account)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(accounts);
+                _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(accounts);
+            return View(account);
         }
 
-        // GET: Accounts/Edit/5
+        // GET: Account/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace FinalProject_v1.Controllers
                 return NotFound();
             }
 
-            var accounts = await _context.Accounts.SingleOrDefaultAsync(m => m.ID == id);
-            if (accounts == null)
+            var account = await _context.Account.SingleOrDefaultAsync(m => m.ID == id);
+            if (account == null)
             {
                 return NotFound();
             }
-            return View(accounts);
+            return View(account);
         }
 
-        // POST: Accounts/Edit/5
+        // POST: Account/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,role,password")] Accounts accounts)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,role,password")] Account Account)
         {
-            if (id != accounts.ID)
+            if (id != Account.ID)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace FinalProject_v1.Controllers
             {
                 try
                 {
-                    _context.Update(accounts);
+                    _context.Update(Account);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AccountsExists(accounts.ID))
+                    if (!AccountExists(Account.ID))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace FinalProject_v1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(accounts);
+            return View(Account);
         }
 
-        // GET: Accounts/Delete/5
+        // GET: Account/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace FinalProject_v1.Controllers
                 return NotFound();
             }
 
-            var accounts = await _context.Accounts
+            var Account = await _context.Account
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (accounts == null)
+            if (Account == null)
             {
                 return NotFound();
             }
 
-            return View(accounts);
+            return View(Account);
         }
 
-        // POST: Accounts/Delete/5
+        // POST: Account/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var accounts = await _context.Accounts.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Accounts.Remove(accounts);
+            var Account = await _context.Account.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Account.Remove(Account);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AccountsExists(int id)
+        private bool AccountExists(int id)
         {
-            return _context.Accounts.Any(e => e.ID == id);
+            return _context.Account.Any(e => e.ID == id);
         }
     }
 }

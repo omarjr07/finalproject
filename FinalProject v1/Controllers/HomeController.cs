@@ -26,7 +26,7 @@ namespace FinalProject_v1.Controllers
         public IActionResult Lead_Management()
         {
             //GET: Lead Management
-            ViewData["Message"] = "Here you can manage your leads.";
+            ViewData["Message"] = "Here you can manage your lead.";
 
             return View();
         }
