@@ -5,26 +5,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FinalProjectB.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalProjectB.Controllers
 {
     public class HomeController : Controller
     {
+        private FinalProjectBContext _context;
+
+        public HomeController(FinalProjectBContext context)
+        {
+            _context = context;
+        }
+
+        //GET: HOME
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult About()
+        //GET: Admin Portal
+        public IActionResult Admin_Portal()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Here you can manage your users.";
 
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Lead_Management()
         {
-            ViewData["Message"] = "Your contact page.";
+            //GET: Lead Management
+            ViewData["Message"] = "Here you can manage your lead.";
 
             return View();
         }
@@ -32,6 +42,67 @@ namespace FinalProjectB.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(Account account)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Account.Add(account);
+                _context.SaveChanges(); //Insert user data to table
+
+                ModelState.Clear(); //Clear registration contents
+                ViewBag.Message = account.fName + " " + account.lName + "successfully registered.";
+            }
+            return View();
+        }
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(Account account)
+        {
+            var UserAccount = _context.Account.Where(u => u.Email == account.Username && u.password == account.password).FirstOrDefault();
+            if (UserAccount != null) //Add to session
+            {
+                HttpContext.Session.SetString("ID", UserAccount.ID.ToString());
+                HttpContext.Session.SetString("Username", UserAccount.Username);
+                return RedirectToAction("Welcome");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Username or Paassword is wrong.");
+            }
+            return View();
+        }
+
+        public ActionResult lead() //Redirect to lead page
+        {
+            if (HttpContext.Session.GetString("ID") != null)
+            {
+                ViewBag.Username = HttpContext.Session.GetString("Username");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login"); //Redirects to Login page if not valid
+            }
+
+        }
+
+        public ActionResult Logout()
+        {
+
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }
