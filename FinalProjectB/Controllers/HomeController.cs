@@ -70,21 +70,21 @@ namespace FinalProjectB.Controllers
         [HttpPost]
         public ActionResult Login(Account account)
         {
-            var UserAccount = _context.Account.Where(u => u.Email == account.Username && u.password == account.password).FirstOrDefault();
+            var UserAccount = _context.Account.Where(u => u.Username == account.Username && u.Password == account.Password).FirstOrDefault();
             if (UserAccount != null) //Add to session
             {
                 HttpContext.Session.SetString("ID", UserAccount.ID.ToString());
                 HttpContext.Session.SetString("Username", UserAccount.Username);
-                return RedirectToAction("Welcome");
+                return RedirectToAction("Lead");
             }
             else
             {
-                ModelState.AddModelError("", "Username or Paassword is wrong.");
+                ModelState.AddModelError("", "Username or Password is wrong.");
             }
             return View();
         }
 
-        public ActionResult lead() //Redirect to lead page
+        public ActionResult Lead() //Redirect to lead page
         {
             if (HttpContext.Session.GetString("ID") != null)
             {

@@ -24,11 +24,11 @@ namespace FinalProjectB.Models
         [Required(ErrorMessage = "Username is Required")]
         public string Username { get; set; }
 
-        public string role { get; set; }
+        public string Role { get; set; }
 
         [Required(ErrorMessage = "Password Name is required.")]
         [DataType(DataType.Password)]
-        public string password { get; set; }
+        public string Password { get; set; }
 
 
         [Compare("Password", ErrorMessage = "Password doesnt match.")]
