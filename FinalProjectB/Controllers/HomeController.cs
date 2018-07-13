@@ -75,6 +75,7 @@ namespace FinalProjectB.Controllers
             {
                 HttpContext.Session.SetString("ID", UserAccount.ID.ToString());
                 HttpContext.Session.SetString("Username", UserAccount.Username);
+                HttpContext.Session.SetString("Role", UserAccount.Role);
                 return RedirectToAction("Lead");
             }
             else
@@ -89,7 +90,7 @@ namespace FinalProjectB.Controllers
             if (HttpContext.Session.GetString("ID") != null)
             {
                 ViewBag.Username = HttpContext.Session.GetString("Username");
-                return View();
+                return RedirectToAction("Index", "Leads");
             }
             else
             {

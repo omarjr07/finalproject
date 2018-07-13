@@ -26,7 +26,7 @@ namespace FinalProjectB.Models
 
         public string Role { get; set; }
 
-        [Required(ErrorMessage = "Password Name is required.")]
+        [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

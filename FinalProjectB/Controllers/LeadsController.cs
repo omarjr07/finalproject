@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProjectB.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalProjectB.Controllers
 {
@@ -21,7 +22,20 @@ namespace FinalProjectB.Controllers
         // GET: Leads
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Lead.ToListAsync());
+            List<Lead> mlist;
+            string leadowner = HttpContext.Session.GetString("Username");
+            string role = HttpContext.Session.GetString("Role");
+           
+            if (role.Equals("admin",StringComparison.CurrentCultureIgnoreCase)) {
+
+                mlist = await _context.Lead.ToListAsync();
+                }
+            else
+            {
+                mlist = await _context.Lead.Where(u => u.owner == leadowner).ToListAsync();
+            }
+    
+            return View(mlist);
         }
 
         // GET: Leads/Details/5
@@ -43,6 +57,7 @@ namespace FinalProjectB.Controllers
         }
 
         // GET: Leads/Create
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -53,8 +68,11 @@ namespace FinalProjectB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,fName,lName,email,phone,owner")] Lead lead)
+        public async Task<IActionResult> Create([Bind("ID,fName,lName,email,phone")] Lead lead)
         {
+            lead.owner =
+            HttpContext.Session.GetString("Username");
+
             if (ModelState.IsValid)
             {
                 _context.Add(lead);
@@ -85,7 +103,7 @@ namespace FinalProjectB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,email,phone,owner")] Lead lead)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,email,phone")] Lead lead)
         {
             if (id != lead.ID)
             {

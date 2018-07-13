@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProjectB.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FinalProjectB.Controllers
 {
@@ -20,8 +21,15 @@ namespace FinalProjectB.Controllers
 
         // GET: Accounts
         public async Task<IActionResult> Index()
+
         {
-            return View(await _context.Account.ToListAsync());
+            if (HttpContext.Session.GetString("Role").Equals("admin", StringComparison.CurrentCultureIgnoreCase))
+            {
+                return View(await _context.Account.ToListAsync());
+            }
+            else
+
+                return RedirectToAction("Error");//Create error page
         }
 
         // GET: Accounts/Details/5
@@ -53,7 +61,7 @@ namespace FinalProjectB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,fName,lName,Email,Username,role,password,ConfirmPassword")] Account account)
+        public async Task<IActionResult> Create([Bind("ID,fName,lName,Email,Username,role,Password,ConfirmPassword")] Account account)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +93,7 @@ namespace FinalProjectB.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,Email,Username,role,password,ConfirmPassword")] Account account)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,fName,lName,Email,Username,role,Password,ConfirmPassword")] Account account)
         {
             if (id != account.ID)
             {

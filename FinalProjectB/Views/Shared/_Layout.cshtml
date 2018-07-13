@@ -33,15 +33,23 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
                     @if (Context.Session.GetString("ID") != null)// Will display logout or login depending on user access
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
+                        @if (Context.Session.GetString("Role").Equals("admin", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            <li><a asp-area="" asp-controller="Accounts" asp-action="Index">Admin Portal</a></li>
+
+                        }
+
+                        <li><a asp-area="" asp-controller="Leads" asp-action="Index">My Leads</a></li>
+
 
                     }
                     else
                     {
+
                         <li><a asp-area="" asp-controller="Home" asp-action="Register">Register</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Login">Login</a></li>
                     }
